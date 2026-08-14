@@ -1,0 +1,303 @@
+{
+  "company": {
+    "name": "Innovera",
+    "name_ar": "إنوفيرا",
+    "tagline": "Empowering Talent. Shaping the Future.",
+    "tagline_ar": "تمكين المواهب. صناعة المستقبل.",
+    "description": "Innovera is a Pan-Arab innovator headquartered in Egypt, with regional offices in KSA and Oman. Specializing in AI, Cybersecurity, Software Engineering, Digital Transformation, and Intelligent Outsourcing. Strategic partner of NVIDIA, Palo Alto Networks, H3C, Fortinet, and AICERTS.",
+    "mission": "Delivering innovative AI-driven digital solutions, world-class cybersecurity training, and strategic workforce services that empower individuals and organizations to excel, adapt, and grow.",
+    "vision": "To be the smartest regional platform enabling organizations to lead digital transformation, AI adoption, and cybersecurity readiness confidently.",
+    "website": "https://www.innoveracorp.com",
+    "contact": {
+      "email": "info@innoveracorp.com",
+      "phone_primary": "+20 10 70008672",
+      "languages": ["English", "Arabic"]
+    },
+    "social_media": {
+      "facebook": "https://facebook.com/innoveracorp",
+      "twitter": "https://twitter.com/innoveracorp",
+      "linkedin": "https://linkedin.com/company/innoveracorp",
+      "instagram": "https://instagram.com/innoveracorp"
+    },
+    "partners": [
+      {"name": "AICERTS", "type": "AI & Emerging Tech Certification Partner"},
+      {"name": "Palo Alto Networks", "type": "Cybersecurity & Training Partner"},
+      {"name": "NVIDIA", "type": "AI & GPU Technology Partner"},
+      {"name": "H3C", "type": "Networking & Infrastructure Partner"},
+      {"name": "Fortinet", "type": "Cybersecurity Partner"},
+      {"name": "Engineering Syndicate", "type": "Professional Accreditation"}
+    ],
+    "offices": [
+      {
+        "name": "مصر (المقر الرئيسي)",
+        "city": "القاهرة الجديدة",
+        "address": "المبنى الإداري رقم 5، كمبوند زيزينيا، التجمع الخامس، القاهرة",
+        "phone": "+20 108 0000 954",
+        "email": "info@innoveracorp.com"
+      },
+      {
+        "name": "المملكة العربية السعودية",
+        "city": "جدة",
+        "address": "طريق الملك فهد، حي العليا، جدة",
+        "phone": "+20 103 1119 000",
+        "email": "info@innoveracorp.com"
+      },
+      {
+        "name": "سلطنة عُمان",
+        "city": "مسقط",
+        "address": "شارع السلطان قابوس، مسقط",
+        "phone": "+20 103 1117 000",
+        "email": "info@innoveracorp.com"
+      }
+    ],
+    "how_to_buy": {
+      "steps": [
+        "1. طلب استشارة وتحديد الاحتياجات",
+        "2. استلام عرض مخصص وسعر منافس",
+        "3. التنفيذ، التدريب والدعم الفني 24/7"
+      ],
+      "contact": "تواصل معنا عبر info@innoveracorp.com أو +20 10 70008672"
+    }
+  },
+
+  "services": {
+    "training": "برامج تدريبية احترافية في الذكاء الاصطناعي والأمن السيبراني والبرمجيات للأفراد والشركات مع شهادات دولية معتمدة من AICERTS و Palo Alto Networks.",
+    "outsourcing": "توفير كوادر تقنية متخصصة (مطورين، مهندسي أمن سيبراني، دعم فني) وخدمات توظيف وإدارة فرق مجهزة.",
+    "digital_solutions": "استشارات وتطبيقات الذكاء الاصطناعي، التحول الرقمي، والبنية التحتية لحماية البيانات للشركات والمؤسسات الحكومية."
+  },
+
+  "courses": [
+    {
+      "id": "aicerts-1",
+      "title": "AI+ Everyone Fundamentals™",
+      "category": "Artificial Intelligence",
+      "partner": "AICERTS",
+      "level": "Beginner / All Levels",
+      "description": "شهادة أساسيات الذكاء الاصطناعي للجميع. تمنح فهم شامل ومبسط لمفاهيم الذكاء الاصطناعي، تعلم الآلة (Machine Learning)، الذكاء الاصطناعي التوليدي (Generative AI)، واستخداماته في الحياة اليومية والأعمال.",
+      "syllabus": [
+        "مقدمة في الذكاء الاصطناعي وتاريخه",
+        "كيف يعمل تعلم الآلة (Machine Learning Basics)",
+        "الذكاء الاصطناعي التوليدي واستخدامات ChatGPT و LLMs",
+        "تطبيقات الذكاء الاصطناعي في قطاعات الأعمال المختلفة",
+        "الأخلاقيات والمخاوف المتعلقة بالذكاء الاصطناعي"
+      ],
+      "target_audience": "جميع الأفراد والطلاب والمهنيين الراغبين في دخول مجال الذكاء الاصطناعي بدون خلفية برمجة معقدة.",
+      "accreditation": "شهادة دولية معتمدة من AICERTS",
+      "price": "تواصل معنا للاستفسار والخصومات الحالية"
+    },
+    {
+      "id": "aicerts-2",
+      "title": "AI+ Prompting Fundamentals™",
+      "category": "Artificial Intelligence",
+      "partner": "AICERTS",
+      "level": "Beginner to Intermediate",
+      "description": "دورة احترافية في هندسة الأوامر (Prompt Engineering). تتعلم فيها كيفية كتابة أوامر دقيقة وفعالة لنماذج الذكاء الاصطناعي مثل ChatGPT, Claude, Midjourney للحصول على أفضل النتائج في العمل والإنتاجية.",
+      "syllabus": [
+        "مبادئ هندسة الأوامر (Prompt Engineering Rules)",
+        "تقنيات Zero-Shot, Few-Shot, and Chain-of-Thought Prompting",
+        "استخدام الذكاء الاصطناعي لكتابة المحتوى وأتمتة المهام",
+        "توليد الصور وتصاميم الذكاء الاصطناعي (Generative AI Media)",
+        "تطبيقات عملية لبناء مساعدين شخصيين وأدوات عمل"
+      ],
+      "target_audience": "صناع المحتوى، المسوقون، المطورون، وأي شخص يريد مضاعفة إنتاجيته باستخدام الذكاء الاصطناعي.",
+      "accreditation": "شهادة معتمدة من AICERTS",
+      "price": "تواصل معنا للاستفسار والخصومات الحالية"
+    },
+    {
+      "id": "aicerts-3",
+      "title": "AI+ Executive™",
+      "category": "Artificial Intelligence & Management",
+      "partner": "AICERTS",
+      "level": "Advanced / Leadership",
+      "description": "برنامج الذكاء الاصطناعي للقادة والتنفيذيين. يركز على استراتيجيات تطبيق الذكاء الاصطناعي في المؤسسات، قيادة التحول الرقمي، حساب العائد على الاستثمار (ROI)، وإدارة المخاطر وحوكمة البيانات.",
+      "syllabus": [
+        "صياغة استراتيجية الذكاء الاصطناعي للمؤسسات (AI Strategy)",
+        "قيادة فرق وتقنيات الذكاء الاصطناعي",
+        "تقييم أدوات الذكاء الاصطناعي واختيار الحلول المناسبة",
+        "حساب العائد على الاستثمار والجدوى الاقتصادية",
+        "حوكمة الذكاء الاصطناعي وإدارة المخاطر والامتثال القانوني"
+      ],
+      "target_audience": "المدراء التنفيذيون (CEOs, CTOs)، رواد الأعمال، ومدراء القطاعات والتطوير الاستراتيجي.",
+      "accreditation": "شهادة دولية معتمدة من AICERTS",
+      "price": "تواصل معنا للتفاصيل والعروض الخاصة بالشركات"
+    },
+    {
+      "id": "aicerts-4",
+      "title": "AI+ Developer™",
+      "category": "Artificial Intelligence & Software",
+      "partner": "AICERTS",
+      "level": "Intermediate to Advanced",
+      "description": "دورة تطوير تطبيقات الذكاء الاصطناعي للمبرمجين. تغطي بناء وتكامل نماذج الذكاء الاصطناعي عبر APIs، استخدام LangChain و LlamaIndex، وبناء تطبيقات RAG و AI Agents.",
+      "syllabus": [
+        "أساسيات تطوير AI والنماذج اللغوية الكبيرة (LLMs)",
+        "استخدام APIs من OpenAI, Anthropic, HuggingFace",
+        "بناء أنظمة RAG (Retrieval-Augmented Generation)",
+        "استخدام قواعد البيانات المتجهة (Vector Databases)",
+        "بناء وكلاء الذكاء الاصطناعي (AI Agents & Workflows)"
+      ],
+      "target_audience": "مطوروا البرمجيات (Software Developers)، مهندسو البيانات، ومطورو الويب والتطبيقات.",
+      "accreditation": "شهادة دولية معتمدة من AICERTS",
+      "price": "تواصل معنا للتفاصيل"
+    },
+    {
+      "id": "aicerts-5",
+      "title": "AI+ Data Science™",
+      "category": "Data Science & AI",
+      "partner": "AICERTS",
+      "level": "Intermediate to Advanced",
+      "description": "شهادة علم البيانات والذكاء الاصطناعي. تتناول جمع البيانات، تنظيفها، تحليلها إحصائياً، وبناء نماذج تعلم الآلة والتعلم العميق باستخدام Python و TensorFlow.",
+      "syllabus": [
+        "تحليل البيانات بلغة Python و Pandas/NumPy",
+        "تصور البيانات (Data Visualization)",
+        "بناء نماذج Machine Learning (Classification, Regression)",
+        "مقدمة في التعلم العميق (Deep Learning & Neural Networks)",
+        "تقييم النماذج وتحسين أدائها (Model Optimization)"
+      ],
+      "target_audience": "محللو البيانات، المهندسون، والمهتمون بالتخصص في علم البيانات.",
+      "accreditation": "شهادة دولية معتمدة من AICERTS",
+      "price": "تواصل معنا للتفاصيل"
+    },
+    {
+      "id": "aicerts-6",
+      "title": "AI+ Cloud Architect™",
+      "category": "Cloud & AI Infrastructure",
+      "partner": "AICERTS",
+      "level": "Advanced",
+      "description": "تخصص هندسة سحابة الذكاء الاصطناعي. يركز على تصميم ونشر بنية تحتية سحابية قادرة على تشغيل وحراسة نماذج الذكاء الاصطناعي على AWS, Azure, و GCP.",
+      "syllabus": [
+        "تصميم بنية الذكاء الاصطناعي السحابية (AI Cloud Architecture)",
+        "نشر نماذج الذكاء الاصطناعي بكفاءة (Model Deployment & MLOps)",
+        "إدارة الموارد وتوفير تكاليف الحوسبة (GPU/CPU Optimization)",
+        "أمان الحوسبة السحابية الخاصة بالذكاء الاصطناعي"
+      ],
+      "target_audience": "مهندسو السحابة (Cloud Engineers)، مهندسو DevOps، ومعماريو الأنظمة.",
+      "accreditation": "شهادة دولية معتمدة من AICERTS",
+      "price": "تواصل معنا للتفاصيل"
+    },
+    {
+      "id": "aicerts-7",
+      "title": "AI+ Security Specialist™",
+      "category": "Cybersecurity & AI",
+      "partner": "AICERTS",
+      "level": "Advanced",
+      "description": "تخصص أمان الذكاء الاصطناعي وحماية النماذج. يركز على تأمين أنظمة الذكاء الاصطناعي ضد الهجمات مثل Prompt Injection, Data Poisoning, ونشر قواعد الأمن السيبراني المتقدمة.",
+      "syllabus": [
+        "تهديدات وثغرات أنظمة الذكاء الاصطناعي (OWASP Top 10 for LLMs)",
+        "حماية البيانات والخصوصية في نماذج AI",
+        "تأمين الـ APIs ووسائل الاتصال بنماذج الذكاء الاصطناعي",
+        "الكشف عن الهجمات والاستجابة للحوادث الأمنية"
+      ],
+      "target_audience": "خبراء الأمن السيبراني ومطورو الحلول الآمنة.",
+      "accreditation": "شهادة دولية معتمدة من AICERTS",
+      "price": "تواصل معنا للتفاصيل"
+    },
+    {
+      "id": "aicerts-8",
+      "title": "AI+ Ethics Specialist™",
+      "category": "AI Governance",
+      "partner": "AICERTS",
+      "level": "All Levels",
+      "description": "شهادة أخلاقيات وحوكمة الذكاء الاصطناعي. تضمن فهم التشريعات الدولية، تقليل التحيز في النماذج، والامتثال للمعايير الأخلاقية والمؤسسية.",
+      "target_audience": "المستشارون القانونيون، مدراء الالتزام (Compliance Officers)، ومدراء المنتجات.",
+      "accreditation": "شهادة دولية معتمدة من AICERTS"
+    },
+    {
+      "id": "aicerts-9",
+      "title": "Blockchain+ Executive™",
+      "category": "Emerging Tech & Blockchain",
+      "partner": "AICERTS",
+      "level": "Leadership",
+      "description": "شهادة تقنيات البلوكشين للتنفيذيين. تغطي تطبيقات العقود الذكية، الأصول الرقمية، وتأثير البلوكشين على القطاع المالي والخدمات اللوجستية.",
+      "accreditation": "شهادة دولية معتمدة من AICERTS"
+    },
+    {
+      "id": "palo-1",
+      "title": "Palo Alto Network Security Fundamentals (ECU)",
+      "category": "Cybersecurity",
+      "partner": "Palo Alto Networks",
+      "price": "4,000 LE",
+      "description": "أساسيات أمن الشبكات والتأمين السيبراني من Palo Alto Networks. يغطي مفاهيم العنونة، Zero Trust، وتكوين منصات أمن الشبكات.",
+      "enrollment_url": "https://www.innoveracorp.com/enroll/12"
+    },
+    {
+      "id": "palo-2",
+      "title": "Palo Alto Cyber Security Foundation",
+      "category": "Cybersecurity",
+      "partner": "Palo Alto Networks",
+      "price": "3,500 LE",
+      "description": "دورة أساسيات الأمن السيبراني الشاملة مع معامل افتراضية حية (Virtual Labs) لتحليل البرمجيات الخبيثة وتطبيق سياسات Zero Trust و NGFW Firewalls.",
+      "enrollment_url": "https://www.innoveracorp.com/enroll/13"
+    },
+    {
+      "id": "dev-1",
+      "title": "Build Your App - Software Development Program",
+      "category": "Software Development",
+      "partner": "Innovera",
+      "price": "16,000 LE",
+      "description": "برنامج تطوير البرمجيات الشامل لتطوير التطبيقات من الصفر حتى الإطلاق الفعلي مع المشاريع العملية ومراجعة الكود.",
+      "enrollment_url": "https://www.innoveracorp.com/enroll/14"
+    },
+    {
+      "id": "cyber-cert",
+      "title": "Cyber Security Program Certificate",
+      "category": "Cybersecurity",
+      "partner": "Innovera & Partners",
+      "price": "5,000 LE",
+      "description": "شهادة برنامج الأمن السيبراني الدبلوماسية الشاملة التي تغطي اختبار الاختراق (Ethical Hacking)، التشفير، الاستجابة للحوادث، والأمن السحابي.",
+      "enrollment_url": "https://www.innoveracorp.com/enroll/15"
+    }
+  ],
+
+  "academy": {
+    "name": "Innovera Academy",
+    "program": "From Classroom to Co-Founder",
+    "duration": "12–16 أسبوع (مساءً وفي عطلات نهاية الأسبوع)",
+    "description": "برنامج الأكاديمية هو حاضنة ومسرعة أعمال عملية للطلاب والخريجين. تتعلم فيه كيف تحول مشروعك التقني إلى شركة ناشئة حقيقية (Startup) مع فرصة الحصول على تمويل أولى (Micro-grant) بدون حصة (Equity) أو الالتحاق بوظيفة في شركائنا كمسار بديل.",
+    "stages": [
+      "DEVELOP (8 أسابيع): تأسيس تقني، دراسة السوق، وبناء العرض التقديمي",
+      "BUILD (أسابيع 4-9): بناء المنتج الأولي MVP مع رصيد سحابي ودعم فني",
+      "LAUNCH (4 أسابيع): الحصول على تمويل أولي Micro-grant وعرض المشروعات على مستثمرين",
+      "SHOW (أسبوع الختام): الاستعراض في يوم العروض Demo Day وعرض الفرص الوظيفية"
+    ],
+    "accreditation": "معتمد من AICERTS و Palo Alto Networks و Fortinet ونقابة المهندسين"
+  },
+
+  "faq": [
+    {
+      "question": "ما هي كورسات AICERTS المتاحة لديكم؟",
+      "answer": "نوفر جميع كورسات وشهادات AICERTS العالمية المعتمدة في الذكاء الاصطناعي والبلوكشين، وتشمل:\n• AI+ Everyone Fundamentals™ (أساسيات الذكاء الاصطناعي)\n• AI+ Prompting Fundamentals™ (هندسة الأوامر والإنتاجية)\n• AI+ Executive™ (الذكاء الاصطناعي للقادة والمدراء)\n• AI+ Developer™ (تطوير تطبيقات الـ AI و RAG للبرمجة)\n• AI+ Data Science™ (علم البيانات والتعلم العميق)\n• AI+ Cloud Architect™ (معماري سحابة الذكاء الاصطناعي)\n• AI+ Security Specialist™ (أمان الذكاء الاصطناعي)\n• AI+ Ethics Specialist™ (أخلاقيات وحوكمة AI)\n• Blockchain+ Executive™ (تطبيقات البلوكشين للتنفيذيين)\nجميع الشهادات معتمدة دولياً."
+    },
+    {
+      "question": "ما هي تفاصيل كورس AI+ Everyone Fundamentals؟",
+      "answer": "هو كورس يتناول أساسيات الذكاء الاصطناعي بدون حاجة لخلفية برمجة. يتناول تعلم الآلة، الذكاء الاصطناعي التوليدي (Generative AI)، واستخدام أدوات الذكاء الاصطناعي في الأعمال."
+    },
+    {
+      "question": "ما هي تفاصيل كورس AI+ Prompting Fundamentals؟",
+      "answer": "كورس احترافي في هندسة الأوامر (Prompt Engineering). يركز على كتابة أوامر احترافية لـ ChatGPT و Midjourney ومضاعفة الإنتاجية الشخصية والمؤسسية."
+    },
+    {
+      "question": "ما هي تفاصيل كورس AI+ Executive؟",
+      "answer": "مخصص للقادة والتنفيذيين لصياغة استراتيجيات الذكاء الاصطناعي في المؤسسات، حساب العائد على الاستثمار ROI، وحوكمة البيانات."
+    },
+    {
+      "question": "ما هي تفاصيل كورس AI+ Developer؟",
+      "answer": "مخصص للمبرمجين لبناء تطبيقات الذكاء الاصطناعي، استخدام الـ APIs، بناء أنظمة RAG وكلاء الذكاء الاصطناعي (AI Agents)."
+    },
+    {
+      "question": "ما هي Innovera Academy؟",
+      "answer": "برنامج عملي مدته 12-16 أسبوع يحولك من مبرمج إلى مؤسس شركة ناشئة مع فرصة الحصول على تمويل Micro-grant ووظيفة كخطة بديلة."
+    },
+    {
+      "question": "ما هي شراكات Innovera؟",
+      "answer": "نحن شركاء رسميون مع: AICERTS, Palo Alto Networks, NVIDIA, H3C, Fortinet, ونقابة المهندسين."
+    },
+    {
+      "question": "ما هي أسعار الكورسات وطرق الدفع؟",
+      "answer": "الكورسات تشمل:\n• Palo Alto Network Security Fundamentals: 4,000 EGP\n• Palo Alto Cyber Security Foundation: 3,500 EGP\n• Cyber Security Program Certificate: 5,000 EGP\n• Build Your App: 16,000 EGP\n• كورسات AICERTS: تواصل معنا للحصول على أسعار الخصم والتقسيط على info@innoveracorp.com أو +20 10 70008672."
+    },
+    {
+      "question": "أين تقع فروع Innovera؟",
+      "answer": "لدينا فروع في 3 دول:\n1. مصر: القاهرة الجديدة، التجمع الخامس، كمبوند زيزينيا (+20 108 0000 954)\n2. السعودية: جدة، طريق الملك فهد (+20 103 1119 000)\n3. عُمان: مسقط، شارع السلطان قابوس (+20 103 1117 000)"
+    }
+  ]
+}

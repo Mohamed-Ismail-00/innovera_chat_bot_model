@@ -1,0 +1,26 @@
+# ─── Security: Environment & Secret Files ───
+.env
+*.env
+!.env.example
+
+# ─── Python ───
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+ENV/
+chroma_db/
+*.log
+
+# ─── PHP Storage / Session Data ───
+php-backend/storage/sessions/*.json
+!php-backend/storage/sessions/.gitkeep
+
+# ─── OS & IDE Files ───
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp

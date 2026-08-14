@@ -1,0 +1,35 @@
+# ─── Innovera AI Chatbot — Apache Configuration ───
+# Enable URL rewriting and set security/performance headers.
+
+# Rewrite Engine
+RewriteEngine On
+
+# ─── CORS Headers (for widget embedding on any domain) ───
+<IfModule mod_headers.c>
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+    Header always set Access-Control-Allow-Headers "Content-Type, Accept"
+</IfModule>
+
+# ─── Security: Block access to sensitive files ───
+<FilesMatch "\.(env|json|log)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order Allow,Deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# ─── Block access to config and includes directories ───
+RewriteRule ^config/ - [F,L]
+RewriteRule ^includes/ - [F,L]
+RewriteRule ^storage/ - [F,L]
+RewriteRule ^data/ - [F,L]
+
+# ─── Disable directory listing ───
+Options -Indexes
+
+# ─── UTF-8 Default Charset ───
+AddDefaultCharset UTF-8

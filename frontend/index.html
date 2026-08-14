@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innovera AI Assistant</title>
+    <meta name="description" content="Innovera AI Assistant - Your intelligent guide to Innovera's courses, services, and solutions.">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!--
+    ╔══════════════════════════════════════════════════════╗
+    ║  Innovera AI Chatbot Widget                         ║
+    ║                                                     ║
+    ║  To embed in your website, copy everything inside   ║
+    ║  the div#innovera-chatbot and include the CSS/JS.   ║
+    ║                                                     ║
+    ║  Configure API URL via data-api-url attribute:      ║
+    ║  data-api-url="https://your-api.com/api/chat"       ║
+    ╚══════════════════════════════════════════════════════╝
+    -->
+    <div id="innovera-chatbot" data-api-url="http://localhost:8000/api/chat">
+
+        <!-- Chat Widget Toggle Button -->
+        <button id="chat-toggle-btn" class="chat-toggle-btn" aria-label="Open chat">
+            <i class="fas fa-robot"></i>
+            <span class="badge"></span>
+        </button>
+
+        <!-- Chatbot Container -->
+        <div id="chat-container" class="chat-container hidden">
+            <!-- Header -->
+            <div class="chat-header">
+                <div class="header-info">
+                    <div class="bot-avatar">
+                        <img src="https://lh3.googleusercontent.com/d/1GKmxjLOuf5s9RZXitclgYgdbPa2QMC8m" 
+                             alt="Innovera Logo" 
+                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHJ4PSI4IiBmaWxsPSIjMGYxYjNkIi8+PHRleHQgeD0iMjAiIHk9IjI2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDBiNGQ4IiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1mYW1pbHk9IkFyaWFsIj5JPC90ZXh0Pjwvc3ZnPg=='">
+                    </div>
+                    <div>
+                        <h3>Innovera Assistant</h3>
+                        <span class="status"><span class="dot"></span> متصل</span>
+                    </div>
+                </div>
+                <button id="chat-close-btn" class="close-btn" aria-label="Close chat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Messages Area -->
+            <div id="chat-messages" class="chat-messages">
+                <!-- Initial Greeting -->
+                <div class="message bot-message">
+                    <div class="message-content">
+                        أهلاً بك في <strong>Innovera</strong>! 👋<br>
+                        أنا المساعد الذكي، يمكنني مساعدتك في:<br>
+                        • معرفة <strong>الكورسات والأسعار</strong><br>
+                        • تفاصيل <strong>الأكاديمية</strong> وبرنامج ريادة الأعمال<br>
+                        • معلومات عن <strong>الشراكات والخدمات</strong><br>
+                        • <strong>الفروع</strong> وطرق التواصل<br><br>
+                        اختر سؤال سريع من الأسفل أو اكتب سؤالك 👇
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="اكتب سؤالك هنا..." autocomplete="off" maxlength="500">
+                <button id="chat-send-btn" disabled aria-label="Send message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+
+            <!-- Powered By -->
+            <div class="powered-by">
+                Powered by <a href="https://innoveracorp.com" target="_blank">Innovera AI</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="js/chat.js"></script>
+</body>
+</html>
