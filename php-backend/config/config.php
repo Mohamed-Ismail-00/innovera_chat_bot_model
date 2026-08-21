@@ -24,21 +24,21 @@ if (file_exists($envFile)) {
 return [
     // --- Groq Cloud API ---
     'groq_api_key'        => getenv('GROQ_API_KEY') ?: '',
-    'groq_model'          => getenv('GROQ_MODEL') ?: 'llama-3.1-8b-instant',
+    'groq_model'          => getenv('GROQ_MODEL') ?: 'openai/gpt-oss-120b',
     'groq_fallback_models' => [
-        'llama-3.1-8b-instant',
-        'llama3-8b-8192',
-        'llama-3.3-70b-versatile',
+        'openai/gpt-oss-120b',
+        'qwen/qwen3.6-27b',
+        'openai/gpt-oss-20b',
     ],
     'groq_api_url'        => 'https://api.groq.com/openai/v1/chat/completions',
 
     // --- Timeouts (seconds) ---
-    'connect_timeout'     => 15,
-    'read_timeout'        => 30,
+    'connect_timeout'     => 30,
+    'read_timeout'        => 60,
 
     // --- LLM Parameters ---
-    'temperature'         => 0.3,
-    'max_tokens'          => 1200,
+    'temperature'         => 0.55,
+    'max_tokens'          => 1500,
 
     // --- Session & Rate Limiting ---
     'max_history_messages' => 6,

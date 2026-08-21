@@ -22,15 +22,39 @@ class RagService
 
     // ─── System Prompt Template ───
     private const SYSTEM_PROMPT = <<<'PROMPT'
-أنت "Innovera Assistant" — المساعد الذكي الرسمي لشركة Innovera (إنوفيرا).
+You are "Innovera Assistant" — the official AI-powered advisor for Innovera (إنوفيرا), a Pan-Arab leader in AI, Cybersecurity, and Digital Transformation.
 
-القواعد:
-1. أجب بأسلوب ودود ومباشر باللغة العربية.
-2. نسّق عناوينك بأسطر جديدة واضحة ووضع مسافات قبل وجمع العناصر.
-3. لا تستخدم أية حروف أو رموز غريبة غير عربية أو غير إنجليزية.
-4. اذكر دائماً معلومات التواصل الرسمية: info@innoveracorp.com | +20 10 70008672 | www.innoveracorp.com
+═══ CRITICAL: LANGUAGE DETECTION ═══
+• If the user writes in English → respond ENTIRELY in English.
+• If the user writes in Arabic → respond ENTIRELY in Arabic.
+• If the user mixes both → respond in the language that dominates their message.
+• NEVER respond in Arabic when the user clearly wrote in English, and vice versa.
 
-المعلومات المتاحة:
+═══ YOUR PERSONALITY & TONE ═══
+You are NOT a basic FAQ bot. You are a knowledgeable, strategic AI consultant who:
+• Speaks like a trusted advisor — warm, confident, and insightful.
+• Gives SPECIFIC, DETAILED answers — never vague or generic.
+• Proactively recommends courses/services based on the user's stated goals or role.
+• Uses real data and numbers (prices, durations, partner names) from the provided context.
+• Asks smart follow-up questions when the user's needs are unclear (e.g., "What's your current role? That will help me recommend the best certification path for you.").
+• Highlights competitive advantages and unique value propositions of Innovera's offerings.
+
+═══ RESPONSE QUALITY RULES ═══
+1. Be SPECIFIC: Instead of "we have AI courses", say "We offer 7 AICERTS-certified AI programs, from AI+ Everyone Fundamentals™ for beginners to AI+ Cloud Architect™ for advanced engineers."
+2. Be INSIGHTFUL: Add context that helps the user decide. Example: "The AI+ Developer™ certification is particularly popular because it covers RAG systems and AI Agents — skills that are in extremely high demand right now."
+3. Be STRUCTURED: Use clear headings, bullet points, and logical grouping. Add spacing between sections.
+4. Be CONSULTATIVE: If someone asks about a course, don't just list features — explain WHO it's best for, WHAT career impact it has, and WHY Innovera's version is special (international AICERTS certification, hands-on projects, etc.).
+5. Be ENGAGING: Use relevant emojis sparingly (🎯, 💡, 🚀, 📊). End responses with a clear next step or call-to-action.
+6. ALWAYS include contact info when relevant: info@innoveracorp.com | +20 10 70008672 | www.innoveracorp.com
+
+═══ HANDLING OUT-OF-SCOPE QUESTIONS ═══
+If asked about something NOT in the provided context:
+• Politely acknowledge the question.
+• Redirect to what you CAN help with from Innovera's offerings.
+• Suggest contacting the team directly for specialized inquiries.
+• NEVER fabricate information not present in the context.
+
+═══ AVAILABLE KNOWLEDGE BASE ═══
 {CONTEXT}
 PROMPT;
 
@@ -175,6 +199,17 @@ PROMPT;
     }
 
     // ══════════════════════════════════════
+    //  Language Detection
+    // ══════════════════════════════════════
+
+    private function isEnglish(string $text): bool
+    {
+        $arabicChars = preg_match_all('/[\x{0600}-\x{06FF}]/u', $text);
+        $latinChars  = preg_match_all('/[a-zA-Z]/', $text);
+        return $latinChars > $arabicChars;
+    }
+
+    // ══════════════════════════════════════
     //  Direct Knowledge Fallback Engine
     // ══════════════════════════════════════
 
@@ -182,18 +217,22 @@ PROMPT;
     {
         $data = $this->getData();
         $q = mb_strtolower($userQuery);
+        $en = $this->isEnglish($userQuery);
 
         // 1. Academy
-        if ($this->matchesAny($q, ['أكاديمية','اكاديمية','academy','startup','رواد'])) {
+        if ($this->matchesAny($q, ['أكاديمية','اكاديمية','academy','startup','رواد','incubator','co-founder','accelerator'])) {
             $acad = $data['academy'] ?? [];
+            $duration = $acad['duration'] ?? '12–16 weeks';
+            if ($en) {
+                return "**Innovera Academy — From Classroom to Co-Founder** 🎓\n\nA hands-on **{$duration}** incubator & accelerator program designed for university students and fresh graduates to transform their tech projects into real startups.\n\n**Program Stages:**\n• **DEVELOP** (8 weeks): Technical foundation, market research, pitch deck\n• **BUILD** (weeks 4-9): MVP development with cloud credits and mentorship\n• **LAUNCH** (4 weeks): Micro-grant funding (no equity taken!) and investor pitches\n• **SHOW** (Final week): Demo Day presentations and career opportunities\n\n**Accredited by**: AICERTS, Palo Alto Networks, Fortinet & Engineering Syndicate\n\n📧 Apply now: info@innoveracorp.com | 📞 +20 10 70008672 | 🌐 www.innoveracorp.com";
+            }
             $stages = implode("\n", array_map(fn($s) => "• {$s}", $acad['stages'] ?? []));
-            $duration = $acad['duration'] ?? '12–16 أسبوع';
             $accred = $acad['accreditation'] ?? 'AICERTS و Palo Alto Networks و Fortinet ونقابة المهندسين';
             return "**Innovera Academy (من الصف إلى الشريك المؤسس)** 🎓\n\nبرنامج عملي مدته **{$duration}** مصمم لطلاب الجامعات والخريجين لتحويل مشاريعهم البرمجية إلى شركات ناشئة حقيقية (Startups).\n\n**مراحل البرنامج:**\n{$stages}\n\n**الاعتمادات والتغطية:**\nمعتمد رسمياً من {$accred}.\n\n📧 للتسجيل والتقديم: info@innoveracorp.com | 📞 +20 10 70008672 | 🌐 www.innoveracorp.com";
         }
 
         // 2. Partnerships
-        if ($this->matchesAny($q, ['شراكات','شركاء','شريك','اعتماد','اعتمادات','partner'])) {
+        if ($this->matchesAny($q, ['شراكات','شركاء','شريك','اعتماد','اعتمادات','partner','partnership','certified','accredit'])) {
             $partners = $data['company']['partners'] ?? [];
             $pLines = [];
             foreach ($partners as $p) {
@@ -204,34 +243,46 @@ PROMPT;
                 }
             }
             $pStr = implode("\n", $pLines);
+            if ($en) {
+                return "**Innovera's Strategic Partnerships & Accreditations** 🤝\n\nWe are official partners with leading global technology companies:\n\n{$pStr}\n\n📧 For corporate partnerships: info@innoveracorp.com | 📞 +20 10 70008672";
+            }
             return "**شراكات Innovera الاعتمادية والدولية** 🤝\n\nنحن شركاء رسميون مع كبرى الشركات والمؤسسات التقنية العالمية:\n\n{$pStr}\n\n📧 للتواصل والشراكات المؤسسية: info@innoveracorp.com | 📞 +20 10 70008672";
         }
 
         // 3. Branches / Contact
-        if ($this->matchesAny($q, ['عنوان','فرع','فروع','تواصل','تليفون','مصر','سعودية','عمان','مكان','إيميل','office','contact','location'])) {
+        if ($this->matchesAny($q, ['عنوان','فرع','فروع','تواصل','تليفون','مصر','سعودية','عمان','مكان','إيميل','office','contact','location','branch','address','where'])) {
             $offices = $data['company']['offices'] ?? [];
             $oLines = [];
             foreach ($offices as $o) {
-                $oLines[] = "• **" . ($o['name'] ?? '') . "**: " . ($o['city'] ?? '') . " - " . ($o['address'] ?? '') . "\n  📞 هاتف: " . ($o['phone'] ?? '') . " | 📧 إيميل: " . ($o['email'] ?? '');
+                $oLines[] = "• **" . ($o['name'] ?? '') . "**: " . ($o['city'] ?? '') . " - " . ($o['address'] ?? '') . "\n  📞 " . ($o['phone'] ?? '') . " | 📧 " . ($o['email'] ?? '');
             }
             $oStr = implode("\n", $oLines);
+            if ($en) {
+                return "**Innovera International Offices** 📍\n\n{$oStr}\n\n🌐 Website: www.innoveracorp.com";
+            }
             return "**فروع ومكاتب شركة Innovera الدولية** 📍\n\n{$oStr}\n\n🌐 الموقع الرسمي: www.innoveracorp.com";
         }
 
         // 4. Courses
-        if ($this->matchesAny($q, ['كورس','كورسات','دورة','دورات','أسعار','سعر','aicerts','palo alto','ذكاء','أمن'])) {
+        if ($this->matchesAny($q, ['كورس','كورسات','دورة','دورات','أسعار','سعر','aicerts','palo alto','ذكاء','أمن','course','courses','training','certification','program','price','cost','learn'])) {
             $courses = array_slice($data['courses'] ?? [], 0, 8);
             $cLines = [];
             foreach ($courses as $c) {
-                $price = !empty($c['price']) ? " - السعر: " . $c['price'] : '';
+                $price = !empty($c['price']) ? " | Price: " . $c['price'] : '';
                 $cLines[] = "• **" . ($c['title'] ?? '') . "** (" . ($c['partner'] ?? '') . "){$price}\n  " . ($c['description'] ?? '');
             }
             $cStr = implode("\n", $cLines);
+            if ($en) {
+                return "**Innovera's Certified Courses & Programs** 📚\n\n{$cStr}\n\n📧 For enrollment & discounts: info@innoveracorp.com | 📞 +20 10 70008672";
+            }
             return "**أبرز الكورسات والشهادات المتاحة لدى Innovera** 📚\n\n{$cStr}\n\n📧 للاستفسار عن التسجيل والخصومات المتاحة: info@innoveracorp.com | 📞 +20 10 70008672";
         }
 
         // 5. Default
-        $desc = $data['company']['description'] ?? 'نحن شركة عربية رائدة في مجالات الذكاء الاصطناعي، الأمن السيبراني، وتطوير البرمجيات.';
+        $desc = $data['company']['description'] ?? '';
+        if ($en) {
+            return "**Welcome to Innovera!** 👋\n\n{$desc}\n\n**Our Core Services:**\n• **Professional Training**: Internationally certified courses from AICERTS & Palo Alto Networks\n• **Innovera Academy**: A startup incubator transforming students into co-founders\n• **Smart Outsourcing**: Providing ready-made technical teams for enterprises\n\n📧 Get in touch: info@innoveracorp.com | 📞 +20 10 70008672 | 🌐 www.innoveracorp.com";
+        }
         return "أهلاً بك في **Innovera**! 👋\n\n{$desc}\n\n**خدماتنا الرئيسية:**\n• **برامج التدريب**: كورسات معتمدة دولياً من AICERTS و Palo Alto Networks.\n• **Innovera Academy**: برنامج تحويل الطلاب والمطورين إلى رواد أعمال (Startups).\n• **التعهيد الذكي (Outsourcing)**: توفير كوادر وفرق تقنية مجهزة للشركات.\n\n📧 للتواصل المباشر: info@innoveracorp.com | 📞 +20 10 70008672 | 🌐 www.innoveracorp.com";
     }
 

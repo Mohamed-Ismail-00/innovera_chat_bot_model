@@ -119,12 +119,15 @@ class LlmService
                 'Authorization: Bearer ' . $this->apiKey,
                 'Content-Type: application/json',
                 'Accept: text/event-stream',
+                'User-Agent: InnoveraChatBot/1.0',
             ],
             CURLOPT_CONNECTTIMEOUT => $this->connectTimeout,
             CURLOPT_TIMEOUT        => $this->readTimeout + $this->connectTimeout,
             CURLOPT_RETURNTRANSFER => false,
             CURLOPT_HEADER         => false,
-            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_IPRESOLVE      => CURL_IPRESOLVE_V4,
         ]);
 
         // ─── Streaming SSE Parser ───
