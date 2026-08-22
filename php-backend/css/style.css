@@ -73,9 +73,10 @@ body {
     position: fixed;
     bottom: 96px;
     right: 24px;
-    width: 400px;
-    height: 620px;
-    max-height: 80vh;
+    width: 430px;
+    max-width: calc(100vw - 32px);
+    height: 640px;
+    max-height: 85vh;
     background-color: var(--chat-bg);
     border-radius: 20px;
     box-shadow: var(--shadow);
@@ -83,13 +84,14 @@ body {
     flex-direction: column;
     overflow: hidden;
     z-index: 10000;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform-origin: bottom right;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid var(--border-color);
 }
 
 .chat-container.hidden {
     opacity: 0;
-    transform: scale(0.8) translateY(20px);
+    visibility: hidden;
+    transform: translateY(20px) scale(0.95);
     pointer-events: none;
 }
 
@@ -99,21 +101,22 @@ body {
     color: white;
     padding: 16px 20px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
 }
 
-.chat-header::after {
+.chat-header::before {
     content: '';
     position: absolute;
     top: -50%;
-    right: -30%;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(0, 180, 216, 0.15) 0%, transparent 70%);
-    border-radius: 50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 180, 216, 0.15) 0%, transparent 60%);
+    pointer-events: none;
 }
 
 .header-info {
@@ -124,29 +127,24 @@ body {
     z-index: 1;
 }
 
-.bot-avatar {
+.avatar {
     width: 42px;
     height: 42px;
-    background: rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, #00b4d8, #0077b6);
     border-radius: 12px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    overflow: hidden;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 4px 12px rgba(0, 180, 216, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
-.bot-avatar img {
-    width: 70%;
-    object-fit: contain;
-}
-
-.header-info h3 {
-    font-size: 15px;
+.title-area h3 {
+    font-size: 16px;
     font-weight: 700;
-    margin-bottom: 2px;
     letter-spacing: 0.3px;
+    margin-bottom: 2px;
 }
 
 .status {
@@ -222,7 +220,7 @@ body {
 
 .message {
     display: flex;
-    max-width: 90%;
+    max-width: 92%;
     animation: message-in 0.3s ease-out;
 }
 
@@ -241,7 +239,7 @@ body {
     padding: 14px 18px;
     border-radius: 16px;
     font-size: 14px;
-    line-height: 1.8;
+    line-height: 1.85;
     word-wrap: break-word;
 }
 
@@ -269,45 +267,35 @@ body {
     color: inherit;
 }
 
-/* ─── Markdown Headings ─── */
-.md-heading-1 {
-    font-size: 16px;
+/* ─── Executive Markdown Headings ─── */
+.md-heading-1, .md-heading-2, .md-heading-3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-weight: 700;
     color: var(--brand-navy);
-    margin: 16px 0 8px;
-    padding-bottom: 6px;
-    border-bottom: 2px solid #e2e8f0;
-}
-
-.md-heading-2 {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--brand-navy);
-    margin: 14px 0 8px;
-    padding-bottom: 4px;
-    border-bottom: 1.5px solid #e2e8f0;
-}
-
-.md-heading-3 {
+    margin: 16px 0 10px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, rgba(15, 27, 61, 0.05) 0%, rgba(0, 180, 216, 0.07) 100%);
+    border-radius: 8px;
+    border-inline-start: 3.5px solid var(--brand-navy);
     font-size: 14px;
-    font-weight: 700;
-    color: var(--brand-navy);
-    margin: 12px 0 6px;
-    display: inline-block;
-    background: rgba(15, 27, 61, 0.05);
-    padding: 3px 10px;
-    border-radius: 6px;
-    border-right: 3px solid var(--brand-cyan);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
-/* ─── Markdown Tables ─── */
+.md-heading-1 {
+    font-size: 15.5px;
+    border-inline-start-color: var(--brand-cyan);
+}
+
+/* ─── Executive Markdown Tables ─── */
 .md-table-wrapper {
     width: 100%;
     overflow-x: auto;
-    margin: 12px 0;
-    border-radius: 8px;
+    margin: 14px 0;
+    border-radius: 10px;
     border: 1px solid #e2e8f0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 3px 12px rgba(15, 27, 61, 0.04);
 }
 
 .md-table {
@@ -319,18 +307,20 @@ body {
 }
 
 .md-table th {
-    background: #0f1b3d;
+    background: linear-gradient(135deg, #0f1b3d, #1a2f6b);
     color: white;
     font-weight: 700;
-    padding: 8px 12px;
+    padding: 10px 12px;
     border-bottom: 1px solid #e2e8f0;
     white-space: nowrap;
+    letter-spacing: 0.2px;
 }
 
 .md-table td {
-    padding: 8px 12px;
+    padding: 9px 12px;
     border-bottom: 1px solid #f1f5f9;
     color: var(--text-primary);
+    line-height: 1.6;
 }
 
 .md-table tr:nth-child(even) td {
@@ -338,35 +328,37 @@ body {
 }
 
 .md-table tr:hover td {
-    background: #f1f5f9;
+    background: #f0fdfa;
 }
 
-/* ─── Markdown Blockquotes & Dividers ─── */
+/* ─── Markdown Blockquotes & Highlight Boxes ─── */
 .md-quote {
-    margin: 10px 0;
-    padding: 8px 14px;
-    background: rgba(0, 180, 216, 0.08);
-    border-right: 3.5px solid var(--brand-cyan);
-    border-radius: 4px;
+    margin: 12px 0;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-inline-start: 4px solid var(--brand-cyan);
+    border-radius: 8px;
     font-size: 13px;
-    color: #334155;
+    color: #0369a1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    line-height: 1.7;
 }
 
 .md-hr {
     border: none;
     height: 1px;
     background: linear-gradient(90deg, transparent, #cbd5e1, transparent);
-    margin: 14px 0;
+    margin: 16px 0;
 }
 
 .md-gap {
-    height: 10px;
+    height: 12px;
 }
 
-/* ─── Markdown Lists ─── */
+/* ─── Cardified Bullet Lists ─── */
 .md-ul, .md-ol {
     list-style: none;
-    margin: 8px 0 10px;
+    margin: 10px 0 12px;
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -376,23 +368,53 @@ body {
 .md-li, .md-oli {
     display: flex;
     align-items: flex-start;
-    gap: 8px;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    border-inline-start: 3.5px solid var(--brand-cyan);
+    box-shadow: 0 1px 4px rgba(15, 27, 61, 0.02);
+    transition: all 0.2s ease;
+    font-size: 13.5px;
     line-height: 1.7;
 }
 
+.md-li:hover, .md-oli:hover {
+    box-shadow: 0 4px 12px rgba(0, 180, 216, 0.08);
+    border-color: #cbd5e1;
+    border-inline-start-color: var(--brand-navy);
+}
+
 .md-bullet {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    background: rgba(0, 180, 216, 0.12);
     color: var(--brand-cyan);
+    font-size: 13px;
     font-weight: bold;
-    font-size: 16px;
-    line-height: 1.4;
     flex-shrink: 0;
+    margin-top: 2px;
 }
 
 .md-num {
-    color: var(--brand-cyan);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 4px;
+    border-radius: 6px;
+    background: rgba(15, 27, 61, 0.08);
+    color: var(--brand-navy);
     font-weight: 700;
-    font-size: 13px;
+    font-size: 11.5px;
     flex-shrink: 0;
+    margin-top: 2px;
 }
 
 .md-li-content {
@@ -418,6 +440,54 @@ body {
     border-radius: 4px;
     font-size: 12.5px;
     font-family: 'Courier New', monospace;
+}
+
+/* ─── Interactive Contact Card ─── */
+.md-contact-box {
+    margin: 14px 0 4px;
+    padding: 12px 14px;
+    background: linear-gradient(135deg, #0f1b3d 0%, #1a2f6b 100%);
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(15, 27, 61, 0.12);
+}
+
+.md-contact-box-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--brand-cyan);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.md-contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.md-contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.12);
+    color: white !important;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.md-contact-btn:hover {
+    background: var(--brand-cyan);
+    color: white !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 180, 216, 0.3);
 }
 
 .bot-message {

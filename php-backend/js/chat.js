@@ -297,7 +297,28 @@ document.addEventListener('DOMContentLoaded', () => {
         // 9. Italic: *text* or _text_
         html = html.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
 
-        // 10. Markdown Links: [text](url)
+        // 10. Interactive Contact Box Parser
+        // Detect lines containing Innovera contact info and convert into rich action cards
+        const contactPattern = /(?:📧|Email|✉️)?\s*\[?(?:info@innoveracorp\.com)\]?(?:\(mailto:info@innoveracorp\.com\))?\s*\|?\s*(?:📞|Phone|WhatsApp)?\s*(?:\+?20[\s\u202f]?10[\s\u202f]?700[\s\u202f]?08672|\+201070008672)\s*\|?\s*(?:🌐|Web)?\s*(?:(?:https?:\/\/)?(?:www\.)?innoveracorp\.com)?/gi;
+        
+        html = html.replace(contactPattern, () => {
+            const isEn = /[a-zA-Z]{4,}/.test(html) && !/[\u0600-\u06FF]/.test(html.slice(0, 100));
+            const title = isEn ? '📞 Direct Contact & Inquiries:' : '📞 قنوات التواصل المباشرة والتسجيل:';
+            const emailLabel = isEn ? '✉️ Email Us' : '✉️ راسلنا عبر الإيميل';
+            const waLabel = isEn ? '💬 WhatsApp' : '💬 تواصل واتساب';
+            const webLabel = isEn ? '🌐 Official Website' : '🌐 الموقع الرسمي';
+
+            return `\n\n<div class="md-contact-box">
+                <div class="md-contact-box-title">${title}</div>
+                <div class="md-contact-actions">
+                    <a href="mailto:info@innoveracorp.com" class="md-contact-btn">${emailLabel}</a>
+                    <a href="https://wa.me/201070008672" target="_blank" rel="noopener" class="md-contact-btn">${waLabel}</a>
+                    <a href="https://www.innoveracorp.com" target="_blank" rel="noopener" class="md-contact-btn">${webLabel}</a>
+                </div>
+            </div>\n\n`;
+        });
+
+        // 11. Markdown Links: [text](url)
         const links = [];
         html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, p1, p2) => {
             const index = links.length;
@@ -305,33 +326,33 @@ document.addEventListener('DOMContentLoaded', () => {
             return `___LINK_${index}___`;
         });
 
-        // 11. Bare Email addresses
+        // 12. Bare Email addresses (not inside contact box)
         html = html.replace(
             /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g,
             '<a href="mailto:$1" class="md-email">$1</a>'
         );
 
-        // 12. Restore Markdown Links
+        // 13. Restore Markdown Links
         html = html.replace(/___LINK_(\d+)___/g, (match, p1) => links[parseInt(p1, 10)] || '');
 
-        // 13. Bullet lists: lines starting with - or • or *
+        // 14. Bullet lists: lines starting with - or • or *
         html = html.replace(/^[\s]*[-•*]\s+(.+)$/gm, '<li class="md-li"><span class="md-bullet">•</span><span class="md-li-content">$1</span></li>');
         html = html.replace(/(<li class="md-li">[\s\S]*?<\/li>\n?)+/g, '<ul class="md-ul">$&</ul>');
 
-        // 14. Numbered lists: lines starting with 1. 2. etc
+        // 15. Numbered lists: lines starting with 1. 2. etc
         html = html.replace(/^[\s]*(\d+)\.\s+(.+)$/gm, '<li class="md-oli"><span class="md-num">$1.</span><span class="md-li-content">$2</span></li>');
         html = html.replace(/(<li class="md-oli">[\s\S]*?<\/li>\n?)+/g, '<ol class="md-ol">$&</ol>');
 
-        // 15. Inline code: `text`
+        // 16. Inline code: `text`
         html = html.replace(/`([^`]+)`/g, '<code class="md-code">$1</code>');
 
-        // 16. Double line breaks (\n\n) -> Spacious paragraph gap
+        // 17. Double line breaks (\n\n) -> Spacious paragraph gap
         html = html.replace(/\n\n+/g, '<div class="md-gap"></div>');
 
-        // 17. Single line breaks (\n) -> <br>
+        // 18. Single line breaks (\n) -> <br>
         html = html.replace(/\n/g, '<br>');
 
-        // 18. Clean up extra <br> after block elements
+        // 19. Clean up extra <br> after block elements
         html = html.replace(/<\/(ul|ol|table|div|blockquote|hr)><br>/gi, '</$1>');
         html = html.replace(/<div class="md-gap"><\/div><br>/gi, '<div class="md-gap"></div>');
 
