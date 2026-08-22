@@ -269,33 +269,150 @@ body {
     color: inherit;
 }
 
-.message-content ul,
-.message-content ol {
-    margin: 10px 0 12px;
-    padding-right: 22px;
-    padding-left: 0;
+/* ─── Markdown Headings ─── */
+.md-heading-1 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--brand-navy);
+    margin: 16px 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #e2e8f0;
 }
 
-.message-content li {
-    margin-bottom: 8px;
+.md-heading-2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--brand-navy);
+    margin: 14px 0 8px;
+    padding-bottom: 4px;
+    border-bottom: 1.5px solid #e2e8f0;
+}
+
+.md-heading-3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--brand-navy);
+    margin: 12px 0 6px;
+    display: inline-block;
+    background: rgba(15, 27, 61, 0.05);
+    padding: 3px 10px;
+    border-radius: 6px;
+    border-right: 3px solid var(--brand-cyan);
+}
+
+/* ─── Markdown Tables ─── */
+.md-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin: 12px 0;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.md-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    text-align: right;
+    background: white;
+}
+
+.md-table th {
+    background: #0f1b3d;
+    color: white;
+    font-weight: 700;
+    padding: 8px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    white-space: nowrap;
+}
+
+.md-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #f1f5f9;
+    color: var(--text-primary);
+}
+
+.md-table tr:nth-child(even) td {
+    background: #f8fafc;
+}
+
+.md-table tr:hover td {
+    background: #f1f5f9;
+}
+
+/* ─── Markdown Blockquotes & Dividers ─── */
+.md-quote {
+    margin: 10px 0;
+    padding: 8px 14px;
+    background: rgba(0, 180, 216, 0.08);
+    border-right: 3.5px solid var(--brand-cyan);
+    border-radius: 4px;
+    font-size: 13px;
+    color: #334155;
+}
+
+.md-hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #cbd5e1, transparent);
+    margin: 14px 0;
+}
+
+.md-gap {
+    height: 10px;
+}
+
+/* ─── Markdown Lists ─── */
+.md-ul, .md-ol {
+    list-style: none;
+    margin: 8px 0 10px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.md-li, .md-oli {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
     line-height: 1.7;
 }
 
-.message-content li:last-child {
-    margin-bottom: 0;
+.md-bullet {
+    color: var(--brand-cyan);
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 1.4;
+    flex-shrink: 0;
 }
 
-.message-content a {
+.md-num {
+    color: var(--brand-cyan);
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+.md-li-content {
+    flex: 1;
+}
+
+/* ─── Links & Badges ─── */
+.md-link, .md-email {
     color: var(--brand-cyan);
     text-decoration: none;
     font-weight: 600;
+    transition: all 0.2s;
 }
 
-.message-content a:hover {
+.md-link:hover, .md-email:hover {
     text-decoration: underline;
+    color: var(--brand-cyan-hover);
 }
 
-.message-content code {
+.md-code {
     background: rgba(15, 27, 61, 0.06);
     padding: 3px 6px;
     border-radius: 4px;

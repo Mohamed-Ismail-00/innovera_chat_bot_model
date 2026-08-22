@@ -252,70 +252,127 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ─── Spacious Markdown Renderer ───
+    // ─── Spacious Markdown & Table Renderer ───
     function renderMarkdown(text) {
         if (!text) return '';
 
         let html = text;
 
-        // 0. Strip any <think>...</think> reasoning blocks (final safety net)
+        // 0. Strip any <think>...</think> reasoning blocks (defense in depth)
         html = html.replace(/<think>[\s\S]*?<\/think>/g, '');
         html = html.replace(/<\/?think>/g, '');
 
         // 1. Remove non-Arabic/English artifacts like Chinese characters
         html = html.replace(/[\u4e00-\u9fa5]/g, '');
 
-        // 2. Escape HTML special characters
+        // 2. Pre-formatting: Inject newlines before stuck headers and bullets
+        // Fix: "text### Header" -> "text\n\n### Header"
+        html = html.replace(/([^\n])\s*(#{1,6}\s+)/g, '$1\n\n$2');
+        // Fix: "text• Item" or "text:• Item" -> "text:\n• Item"
+        html = html.replace(/([^\n\r])\s*([•\-*])\s+/g, '$1\n$2 ');
+        // Fix: "text---" -> "text\n\n---\n\n"
+        html = html.replace(/([^\n\r])\s*(---|___|\*\*\*)/g, '$1\n\n$2\n\n');
+
+        // 3. Escape HTML special characters (except markdown syntax)
         html = html.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-        // 3. Fix headings (#, ##, ###, #### with or without space) -> Block elements with margins
-        html = html.replace(/^#{1,6}\s*(.+)$/gm, '<strong style="display:block;font-size:15px;margin:14px 0 6px;color:#0f1b3d;border-bottom:1px solid #e2e8f0;padding-bottom:3px;">$1</strong>');
+        // 4. Parse Markdown Tables (| header | header |\n|---|---|\n| cell | cell |)
+        html = renderMarkdownTables(html);
 
-        // 4. Bold: **text** or __text__
+        // 5. Horizontal Dividers (--- or ***)
+        html = html.replace(/^[\s]*(---|___|\*\*\*)[\s]*$/gm, '<hr class="md-hr">');
+
+        // 6. Blockquotes (> quote)
+        html = html.replace(/^>\s*(.+)$/gm, '<blockquote class="md-quote">$1</blockquote>');
+
+        // 7. Headings (#, ##, ###)
+        html = html.replace(/^###\s*(.+)$/gm, '<div class="md-heading-3">$1</div>');
+        html = html.replace(/^##\s*(.+)$/gm, '<div class="md-heading-2">$1</div>');
+        html = html.replace(/^#\s*(.+)$/gm, '<div class="md-heading-1">$1</div>');
+
+        // 8. Bold: **text** or __text__
         html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
         html = html.replace(/__(.+?)__/g, '<strong>$1</strong>');
 
-        // 5. Italic: *text* or _text_
+        // 9. Italic: *text* or _text_
         html = html.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
 
-        // 6. Markdown Links: [text](url)
+        // 10. Markdown Links: [text](url)
         const links = [];
         html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, p1, p2) => {
             const index = links.length;
-            links.push(`<a href="${p2}" target="_blank" rel="noopener">${p1}</a>`);
+            links.push(`<a href="${p2}" target="_blank" rel="noopener" class="md-link">${p1}</a>`);
             return `___LINK_${index}___`;
         });
 
-        // 7. Bare Email addresses
+        // 11. Bare Email addresses
         html = html.replace(
             /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g,
-            '<a href="mailto:$1">$1</a>'
+            '<a href="mailto:$1" class="md-email">$1</a>'
         );
 
-        // 8. Restore Markdown Links
+        // 12. Restore Markdown Links
         html = html.replace(/___LINK_(\d+)___/g, (match, p1) => links[parseInt(p1, 10)] || '');
 
-        // 9. Bullet lists: lines starting with - or • or *
-        html = html.replace(/^[\s]*[-•*]\s+(.+)$/gm, '<li style="margin-bottom:6px;">$1</li>');
-        html = html.replace(/(<li style="margin-bottom:6px;">.*<\/li>\n?)+/g, '<ul style="margin:10px 0;padding-right:20px;">$&</ul>');
+        // 13. Bullet lists: lines starting with - or • or *
+        html = html.replace(/^[\s]*[-•*]\s+(.+)$/gm, '<li class="md-li"><span class="md-bullet">•</span><span class="md-li-content">$1</span></li>');
+        html = html.replace(/(<li class="md-li">[\s\S]*?<\/li>\n?)+/g, '<ul class="md-ul">$&</ul>');
 
-        // 10. Numbered lists: lines starting with 1. 2. etc
-        html = html.replace(/^[\s]*\d+\.\s+(.+)$/gm, '<li style="margin-bottom:6px;">$1</li>');
+        // 14. Numbered lists: lines starting with 1. 2. etc
+        html = html.replace(/^[\s]*(\d+)\.\s+(.+)$/gm, '<li class="md-oli"><span class="md-num">$1.</span><span class="md-li-content">$2</span></li>');
+        html = html.replace(/(<li class="md-oli">[\s\S]*?<\/li>\n?)+/g, '<ol class="md-ol">$&</ol>');
 
-        // 11. Inline code: `text`
-        html = html.replace(/`([^`]+)`/g, '<code style="background:rgba(15,27,61,0.08);padding:3px 6px;border-radius:4px;font-size:12px;">$1</code>');
+        // 15. Inline code: `text`
+        html = html.replace(/`([^`]+)`/g, '<code class="md-code">$1</code>');
 
-        // 12. Double line breaks (\n\n) -> Spacious paragraph gap
-        html = html.replace(/\n\n+/g, '<div style="height:12px;"></div>');
+        // 16. Double line breaks (\n\n) -> Spacious paragraph gap
+        html = html.replace(/\n\n+/g, '<div class="md-gap"></div>');
 
-        // 13. Single line breaks (\n) -> <br>
+        // 17. Single line breaks (\n) -> <br>
         html = html.replace(/\n/g, '<br>');
 
-        // 14. Clean up extra <br> after lists or div breaks
-        html = html.replace(/<\/ul><br>/g, '</ul>');
-        html = html.replace(/<\/div><br>/g, '</div>');
+        // 18. Clean up extra <br> after block elements
+        html = html.replace(/<\/(ul|ol|table|div|blockquote|hr)><br>/gi, '</$1>');
+        html = html.replace(/<div class="md-gap"><\/div><br>/gi, '<div class="md-gap"></div>');
 
         return html;
+    }
+
+    // ─── Table Parser Helper ───
+    function renderMarkdownTables(text) {
+        // Match consecutive lines that contain pipe '|' characters
+        const tableRegex = /((?:^[ \t]*\|[^\n]+\|[ \t]*(?:\r?\n|$))+)/gm;
+
+        return text.replace(tableRegex, (match) => {
+            const rawLines = match.trim().split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+            if (rawLines.length < 2) return match;
+
+            // Check if second line is a separator like |---|---|
+            const isSep = /^\|?[\s:-]+(?:\|[\s:-]+)+\|?$/.test(rawLines[1]);
+            if (!isSep) return match;
+
+            const headerRow = rawLines[0];
+            const dataRows = rawLines.slice(2);
+
+            const parseRow = (r) => {
+                // Split by '|' and trim, remove leading/trailing empty elements
+                let cells = r.split('|').map(c => c.trim());
+                if (cells[0] === '') cells.shift();
+                if (cells[cells.length - 1] === '') cells.pop();
+                return cells;
+            };
+
+            const headerCells = parseRow(headerRow);
+            const theadHtml = '<thead><tr>' + headerCells.map(c => `<th>${c}</th>`).join('') + '</tr></thead>';
+
+            const tbodyRows = dataRows.map(r => {
+                const cells = parseRow(r);
+                return '<tr>' + cells.map(c => `<td>${c}</td>`).join('') + '</tr>';
+            }).join('');
+            const tbodyHtml = '<tbody>' + tbodyRows + '</tbody>';
+
+            return `\n\n<div class="md-table-wrapper"><table class="md-table">${theadHtml}${tbodyHtml}</table></div>\n\n`;
+        });
     }
 
     // ─── Quick Replies ───
