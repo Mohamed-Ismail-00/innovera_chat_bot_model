@@ -313,42 +313,69 @@ PROMPT;
         $fullResponse = '';
         $hasContent = false;
         $insideThinkBlock = false;
-        $thinkBuffer = '';
+        $plainTextThinking = false;
 
         try {
             $this->llm->streamResponse(
                 $userMessage,
                 $systemMessage,
                 $history,
-                function (string $chunk) use (&$fullResponse, &$hasContent, &$insideThinkBlock, &$thinkBuffer) {
+                function (string $chunk) use (&$fullResponse, &$hasContent, &$insideThinkBlock, &$plainTextThinking) {
                     if ($chunk === '') return;
 
-                    // ─── Filter out <think>...</think> reasoning blocks ───
                     $text = $chunk;
 
-                    // Handle opening <think> tag (may span across chunks)
+                    // ─── Filter 1: <think>...</think> XML tags ───
                     if (!$insideThinkBlock && str_contains($text, '<think>')) {
                         $parts = explode('<think>', $text, 2);
-                        $text = $parts[0]; // Keep text before <think>
+                        $text = $parts[0];
                         $insideThinkBlock = true;
-                        $thinkBuffer = $parts[1] ?? '';
                     }
-
-                    // Handle closing </think> tag
                     if ($insideThinkBlock) {
-                        if (str_contains($text . $thinkBuffer, '</think>')) {
-                            $afterThink = explode('</think>', $text . $thinkBuffer, 2);
+                        if (str_contains($text, '</think>')) {
+                            $afterThink = explode('</think>', $text, 2);
                             $text = $afterThink[1] ?? '';
                             $insideThinkBlock = false;
-                            $thinkBuffer = '';
                         } else {
-                            $thinkBuffer .= $text;
-                            return; // Still inside think block, don't output
+                            return; // Still inside think block
                         }
                     }
 
-                    // Skip empty text after filtering
-                    $text = trim($text);
+                    // ─── Filter 2: Plain-text thinking patterns ───
+                    // Detect start of plain-text reasoning (common in Qwen/GPT-OSS)
+                    $thinkPatterns = [
+                        "thinking process",
+                        "Analyze User Input",
+                        "Check Constraints",
+                        "Formulate Response",
+                        "Mental Refinement",
+                        "Check Against Constraints",
+                        "Here's a thinking",
+                        "Here is a thinking",
+                        "Let me think",
+                        "I need to think",
+                    ];
+
+                    $combined = $fullResponse . $text;
+                    foreach ($thinkPatterns as $pattern) {
+                        if (stripos($combined, $pattern) !== false && !$hasContent) {
+                            $plainTextThinking = true;
+                            return; // Suppress this chunk
+                        }
+                    }
+
+                    if ($plainTextThinking) {
+                        // Look for the actual response after thinking ends
+                        // Common markers: ✅, or the actual greeting/response start
+                        if (preg_match('/✅\s*(.+)/su', $text, $m)) {
+                            $text = $m[1];
+                            $plainTextThinking = false;
+                        } else {
+                            return; // Still in thinking section
+                        }
+                    }
+
+                    // Don't output empty chunks, but preserve spaces!
                     if ($text === '') return;
 
                     $hasContent = true;

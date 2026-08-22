@@ -108,6 +108,7 @@ class LlmService
             'stream'      => true,
             'temperature' => $this->temperature,
             'max_tokens'  => $this->maxTokens,
+            'reasoning_format' => 'hidden',
         ], JSON_UNESCAPED_UNICODE);
 
         $ch = curl_init();
@@ -167,8 +168,10 @@ class LlmService
                     }
 
                     $json = json_decode($dataStr, true);
-                    if ($json && isset($json['choices'][0]['delta']['content'])) {
-                        $content = $json['choices'][0]['delta']['content'];
+                    if ($json && isset($json['choices'][0]['delta'])) {
+                        $delta = $json['choices'][0]['delta'];
+                        // ONLY pass 'content' — skip 'reasoning_content' entirely
+                        $content = $delta['content'] ?? '';
                         if ($content !== '') {
                             $receivedAnyChunk = true;
                             $onChunk($content);
