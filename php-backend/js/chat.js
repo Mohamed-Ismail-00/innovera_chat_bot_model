@@ -216,6 +216,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Restore escaped newlines sent over SSE
                     data = data.replace(/\\n/g, '\n');
+
+                    // Strip <think>...</think> reasoning blocks (safety net)
+                    data = data.replace(/<think>[\s\S]*?<\/think>/g, '');
+                    data = data.replace(/<\/?think>/g, '');
+
+                    if (!data.trim()) continue; // Skip empty after filtering
+
                     fullResponse += data;
                     botMessageContent.innerHTML = renderMarkdown(fullResponse);
                     scrollToBottom();
@@ -250,6 +257,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!text) return '';
 
         let html = text;
+
+        // 0. Strip any <think>...</think> reasoning blocks (final safety net)
+        html = html.replace(/<think>[\s\S]*?<\/think>/g, '');
+        html = html.replace(/<\/?think>/g, '');
 
         // 1. Remove non-Arabic/English artifacts like Chinese characters
         html = html.replace(/[\u4e00-\u9fa5]/g, '');
